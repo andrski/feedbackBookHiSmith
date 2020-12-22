@@ -27,6 +27,25 @@ export default createStore({
         })
       })
   },
+  putPost: async function({state}, item){
+    console.log(state.token)
+   
+    const formData = new FormData()
+    formData.append('author', item.author)
+    formData.append('content', item.content)
+
+    axios.defaults.headers.common = {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "X-AUTH-TOKEN": state.token
+    }
+    
+   const response = await axios.put(process.env.VUE_APP_CONFURL + '/api/review/create', formData)
+    if(response.status === 200){
+      console.log('done!')
+    }else{
+      console.log('error:', response.status)
+    }
+  }
 },
   mutations: {
     updateToken: function(state, data){
