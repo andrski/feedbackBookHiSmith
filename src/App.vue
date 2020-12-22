@@ -17,7 +17,11 @@
 }
 
 #nav {
+  width: 50%;
+  margin: 1rem auto;
   padding: 30px;
+  display: flex;
+  justify-content: space-between;
 }
 
 #nav a {
