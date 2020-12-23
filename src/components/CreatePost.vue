@@ -4,7 +4,7 @@
       <input type="text" name="author" v-model="author" placeholder="enter author">
       <textarea class="text_area" name="content" v-model="content" placeholder="enter content"></textarea>
     </div>
-    <div class="error" v-if="visiobleError">you not entered value</div>
+    <div class="error" v-if="visiobleError">Error: {{visiobleError}}</div>
     <button v-on:click.prevent="addPost()">add feedback</button>
   </main>
 </template>
@@ -16,7 +16,7 @@ export default {
     return{
       author: '',
       content: '',
-      visiobleError:false
+      visiobleError:''
     }
   },
   mounted: function(){
@@ -29,17 +29,23 @@ export default {
   },
   methods:{
     addPost(){
-      if(!this.author || !this.content){
-        this.visiobleError = true
-        setTimeout(()=>{this.visiobleError = false}, 3000)
-      }else{
-        const item = {}
-        item.author = this.author
-        item.content = this.content
-
-        this.$store.dispatch('putPost', item)
-        this.$router.push('/')
-      }
+        const regexp = /</
+        if(!this.author || !this.content){
+          this.visiobleError = "you not entered a value"
+          setTimeout(()=>{this.visiobleError = ''}, 3000)
+        }
+        if(this.content.match(regexp)){
+          this.visiobleError = "you try to send HTML teg"
+          setTimeout(()=>{this.visiobleError = ''}, 3000)
+        }
+        if(this.author && this.content && !(this.content.match(regexp))){
+          const item = {}
+          item.author = this.author
+          item.content = this.content
+            console.log('else')
+          this.$store.dispatch('putPost', item)
+          // this.$router.push('/')
+        }
     },
   }
 }

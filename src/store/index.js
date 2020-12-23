@@ -20,6 +20,7 @@ export default createStore({
           }
           // no token
           else{
+            
             axios.get(process.env.VUE_APP_CONFURL + '/token/create')
             .then((response)=>{
               if(response.status === 200){
@@ -39,23 +40,18 @@ export default createStore({
           }
   },
   putPost: async function({state}, item){
-    console.log(state.token)
-   
+    console.log(state.token)   
     axios.defaults.headers.common = {
       "Content-Type": "application/x-www-form-urlencoded",
       "X-AUTH-TOKEN": state.token
     }
 
-    const params = new URLSearchParams()
-      params.append('author', item.author)
-      params.append('content', item.content)
+    let parametrs = new URLSearchParams()
+      parametrs.append('author', item.author)
+      parametrs.append('content', item.content)
 
-   const response = await axios.put(process.env.VUE_APP_CONFURL + '/api/review/create', params)
-    if(response.status === 200){
-      console.log('done!')
-    }else{
-      console.log('error:', response.status)
-    }
+   await axios.put(process.env.VUE_APP_CONFURL + '/api/review/create', parametrs)
+  
   }
 },
   mutations: {
