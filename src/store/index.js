@@ -1,11 +1,14 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
+import postsManually from '../assets/posts.js'
 
 export default createStore({
   state: {
     token:'',
     error: false,
-    allPosts:{}
+    allPosts:postsManually,
+    onePost:[],
+    ipArr:[]
   },
   actions: {
     fetchPosts: async function({commit, state}){
@@ -62,13 +65,25 @@ export default createStore({
       state.error = true
     },
     updatePosts: function(state, respData){
-      state.allPosts = respData
+      console.log(respData)
+      //state.allPosts = respData
       state.error = false
+    },
+    updatePostsItems: function(state, items){
+      state.allPosts.items = items // update items only
+    },
+    updateOnePost: function(state, item){
+      state.onePost = item
+    },
+    updateIpArr:function(state, ipArr){
+      state.ipArr = ipArr
     }
   },
   getters:{
     getToken: state => state.token,
     getError: state => state.error,
-    getPosts: state => state.allPosts
+    getPosts: state => state.allPosts,
+    getOnePost: state => state.onePost,
+    getIpArr: state => state.ipArr
   },
 })

@@ -42,9 +42,9 @@ export default {
           const item = {}
           item.author = this.author
           item.content = this.content
-            console.log('else')
           this.$store.dispatch('putPost', item)
-          // this.$router.push('/')
+          this.$router.push('/')
+          this.author = this.content = ''
         }
     },
   }
