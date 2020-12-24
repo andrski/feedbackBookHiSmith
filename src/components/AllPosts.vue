@@ -93,9 +93,11 @@ export default {
 
 <style scoped>
   .handle_error{
+    position: absolute;
+    top: 15%;
+    left: 25%;
     width: 50%;
     text-align: center;
-    margin: 0.3rem auto;
     line-height: 1.5rem;
     font-size: 1.2rem;
   }
